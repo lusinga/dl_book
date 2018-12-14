@@ -52,7 +52,8 @@ model.add(Dense(units=10))  # 分为10类
 model.add(Activation('softmax'))
 
 model.compile(
-    loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy']) # 编译模型
+    loss='categorical_crossentropy', optimizer='sgd',
+    metrics=['accuracy'])  # 编译模型
 
 model.fit(
     X_train,
@@ -63,7 +64,7 @@ model.fit(
     validation_data=(X_test, y_test))  # 进行训练
 score = model.evaluate(X_test, y_test, verbose=1)  # 验证
 
-model.save('keras_mnist1.model') # 保存模型参数
+model.save('keras_mnist1.model')  # 保存模型参数
 
 print('损失值:', score[0])
 print('准确率:', score[1])
