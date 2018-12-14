@@ -13,8 +13,8 @@ def read_labels(filename, items): # 读取图片对应的数字
     return y
 
 
-y_train = read_labels('/Users/ziyingliuziying/lusing/mnist/train-labels-idx1-ubyte', 60000)
-y_test = read_labels('/Users/ziyingliuziying/lusing/mnist/t10k-labels-idx1-ubyte', 10000)
+y_train = read_labels('./train-labels-idx1-ubyte', 60000) # 读取训练标签
+y_test = read_labels('./t10k-labels-idx1-ubyte', 10000) # 读取测试标签
 
 
 def read_images(filename, items): # 读取图像
@@ -30,8 +30,8 @@ def read_images(filename, items): # 读取图像
     return X.reshape(-1, 28 * 28)
 
 
-X_train = read_images('./train-images-idx3-ubyte', 60000)
-X_test = read_images('./t10k-images-idx3-ubyte', 10000)
+X_train = read_images('./train-images-idx3-ubyte', 60000) # 读取训练图像
+X_test = read_images('./t10k-images-idx3-ubyte', 10000) # 读取测试图像
 
 # 超参数
 num_epochs = 1000 # 训练轮数
