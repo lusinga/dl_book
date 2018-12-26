@@ -4,6 +4,8 @@ import random
 
 # 输入文本文件
 filename = './input.txt'
+# 保存训练结果的文件
+savefile_name = './input.pkl'
 
 # 超参数
 num_epochs = 20000 # 轮数
@@ -90,7 +92,7 @@ def generate(decoder,
              all_characters,
              seed_string,
              generate_len=100,
-             temperature=100): # 生成序列的函数
+             temperature=0.8): # 生成序列的函数
     hidden = decoder.init_hidden(1) # 初始化1字符大小的LSTM网络
     input_seed = t.autograd.Variable(char_to_tensor(seed_string).unsqueeze(0))
 
@@ -120,6 +122,7 @@ file_len = len(input_file)
 # 模型、优化器和损失函数
 
 model = LstmNet(num_printable, hidden_size, num_layers, num_printable) # LSTM模型
+model.load_state_dict(t.load(savefile_name)) # 加载之前保存的参数
 optimizer = t.optim.Adam(model.parameters(), lr=learning_rate) # 优化方法选Adam
 criterion = t.nn.CrossEntropyLoss() # 交叉熵
 for epoch in range(1, num_epochs + 1):
@@ -144,5 +147,5 @@ for epoch in range(1, num_epochs + 1):
         print(
             generate(model, all_printable, seed_string='The', generate_len=100))
 
-t.save(model, "input.pt") # 保存模型参数
+t.save(model.state_dict(), savefile_name) # 保存模型参数
 print(generate(model, all_printable, seed_string='What', generate_len=100))
