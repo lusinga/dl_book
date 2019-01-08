@@ -3,12 +3,12 @@ import string
 import random
 
 # 输入文本文件
-filename = './input.txt'
+filename = './nietzsche.txt'
 # 保存训练结果的文件
-savefile_name = './input.pkl'
+savefile_name = './nietzsche.pkl'
 
 # 超参数
-num_epochs = 20000  # 轮数
+num_epochs = 1000  # 轮数
 hidden_size = 100  # 隐藏层大小
 num_layers = 2  # 隐藏层层数
 learning_rate = 1e-2  # 学习率
