@@ -1,7 +1,42 @@
 import tensorflow as tf
 import numpy as np
+import keras
 
-# 读取数据代码请参见Keras和PyTorch部分，节约篇幅这里就不重复了
+# 数据读取部分
+def read_labels(filename, items):  # 读取图片对应的数字
+    file_labels = open(filename, 'rb')
+    file_labels.seek(8)
+    data = file_labels.read(items)
+    y = np.zeros(items, dtype=np.int64)
+    for i in range(items):
+        y[i] = data[i]
+    file_labels.close()
+    return y
+
+
+y_train = read_labels('./train-labels-idx1-ubyte', 60000)
+y_test = read_labels('./t10k-labels-idx1-ubyte', 10000)
+
+y_train = keras.utils.to_categorical(y_train, 10)  # one hot转码
+y_test = keras.utils.to_categorical(y_test, 10)  # one hot转码
+
+
+def read_images(filename, items):  # 读取图像
+    file_image = open(filename, 'rb')
+    file_image.seek(16)
+
+    data = file_image.read(items * 28 * 28)
+
+    X = np.zeros(items * 28 * 28, dtype=np.float32)
+    for i in range(items * 28 * 28):
+        X[i] = data[i] / 255
+    file_image.close()
+    return X.reshape(-1, 28,28,1)
+
+
+X_train = read_images('./train-images-idx3-ubyte', 60000)
+X_test = read_images('./t10k-images-idx3-ubyte', 10000)
+
 
 batch_size = 128  # 训练批次
 test_size = 256  # 测试批次
